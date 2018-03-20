@@ -115,7 +115,7 @@ def mylogout(request):
     except:
         pass
     messages.success(request, 'You have successfully logged out.', extra_tags='alert')
-    return render(request, 'logged_in_index.html',{'login_status': request.user.is_authenticated(),
+    return render(request, 'logged_in_index.html',{'login_status': request.user.is_authenticated,
                                                        'username': request.user.username,
                                                        'phage1': name1,
                                                        'phage2': name2,
@@ -190,7 +190,7 @@ def change_password(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'change_password.html', {'form': form,
-                                                    'login_status': request.user.is_authenticated(),
+                                                    'login_status': request.user.is_authenticated,
                                                     'username': request.user.username,
                                                     })
 
@@ -249,7 +249,7 @@ def validate_latest_phage(query_results):
 
 @login_required
 def add_phage(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         if request.method == 'POST':
             pform = Add_Phage_DataForm(request.POST)    #phage_name
             rrform = Add_ResearcherForm(request.POST)
@@ -337,7 +337,7 @@ def add_phage(request):
                 #if the data is valid
                 #render(request, 'view_phages.html', {'add_status':'true','query_results':query_results}  )
                 #render(request, 'view_phages.html', {'add_status':'true','query_results':query_results ,
-                #                                            'login_status': request.user.is_authenticated(),
+                #                                            'login_status': request.user.is_authenticated,
                 #                                            'username': request.user.username})
 
             else:
@@ -350,7 +350,7 @@ def add_phage(request):
                                                           'isoform': isoform,
                                                           'aform': aform,
                                                           'aiform': aiform,
-                                                          'login_status': request.user.is_authenticated(),
+                                                          'login_status': request.user.is_authenticated,
                                                           'username': request.user.username,
                                                          })
         else:
@@ -368,7 +368,7 @@ def add_phage(request):
                                                       'isoform':isoform,
                                                       'aform': aform,
                                                       'aiform': aiform,
-                                                      'login_status': request.user.is_authenticated(),
+                                                      'login_status': request.user.is_authenticated,
                                                       'username': request.user.username,
                                                      })
 #this form show the phages per user
@@ -378,7 +378,7 @@ def my_phages(request):
     return render(request, 'view_phages.html', {'query_results': query_results,
                                                 'edit_status':'false','add_status':'false',
                                                 'delete_status':'false','latest':name,
-                                               'login_status': request.user.is_authenticated(),
+                                               'login_status': request.user.is_authenticated,
                                                'username': request.user.username
                                                })
 #this form shows all the phages
@@ -388,7 +388,7 @@ def view_phages(request):
     return render(request, 'view_phages.html', {'query_results': query_results,
                                                 'edit_status': 'false', 'add_status': 'false',
                                                 'delete_status': 'false', 'latest': name,
-                                                'login_status': request.user.is_authenticated(),
+                                                'login_status': request.user.is_authenticated,
                                                 'username': request.user.username
                                                 })
 @user_passes_test(lambda u: u.is_superuser, login_url='/admin/')
@@ -398,7 +398,7 @@ def delele_all_phages(request):
     return render(request, 'view_phages.html', {'query_results': query_results,
                                                 'edit_status':'false','add_status':'false',
                                                 'delete_status':'false',
-                                               'login_status': request.user.is_authenticated(),
+                                               'login_status': request.user.is_authenticated,
                                                'username': request.user.username
                                                })
 #this form shows a particular phage
@@ -422,13 +422,13 @@ def view_phage(request):
     except:
         pass
     return render(request, 'view_phage.html', {'item': phage,'previous_names':previous_names,'expdata':expdata,'isodata':isodata,
-                                              'login_status': request.user.is_authenticated(),'dest_dir':list_path,'count':count,
+                                              'login_status': request.user.is_authenticated,'dest_dir':list_path,'count':count,
                                               'username': request.user.username
                                               })
 
 @login_required
 def deletephages(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         x = request.GET.get('name')
         dest_dir = os.path.join(settings.MEDIA_ROOT, "images", x)
         docs_dest_dir = os.path.join(settings.MEDIA_ROOT, "docs", x)
@@ -441,13 +441,13 @@ def deletephages(request):
         query_results = PhageData.objects.all()
         name = validate_latest_phage(query_results)
         return render(request, 'view_phages.html', {'query_results': query_results,'delete_status':'true',
-                                               'login_status': request.user.is_authenticated(),'latest':name,
+                                               'login_status': request.user.is_authenticated,'latest':name,
                                                'username': request.user.username
                                                })
     else:
         #messages.error(request,'Login or signup first!')
         return render(request,'login.html',
-                      {'login_status': request.user.is_authenticated()
+                      {'login_status': request.user.is_authenticated
                        })
 
 
@@ -476,7 +476,7 @@ def search_phage(request):
 
     phage_filter = PhageFilter(request.GET, queryset=phage_list)
     return render(request, 'search_phage.html', {'filter': phage_filter,
-                                                 'login_status': request.user.is_authenticated(),
+                                                 'login_status': request.user.is_authenticated,
                                                  'username': request.user.username,
                                                  })
 
@@ -489,7 +489,7 @@ def check_entry(name):
 
 @login_required
 def editPhage(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         name = request.GET.get('name')
         phage = PhageData.objects.get(phage_name = name)
         isodata = IsolationData.objects.filter(isokey = phage)
@@ -515,7 +515,7 @@ def editPhage(request):
                                                               'aform': aform,
                                                               'aiform': aiform,'duplicate':'true',
                                                               'isoform':isoform,'iso':last,'exp':last_exp,
-                                                              'login_status': request.user.is_authenticated(),
+                                                              'login_status': request.user.is_authenticated,
                                                               'username': request.user.username,
                                                              })
                 phage.phage_name = curr_phage
@@ -563,7 +563,7 @@ def editPhage(request):
                 query_results = PhageData.objects.all()
                 lname = validate_latest_phage(query_results)
                 return render(request, 'view_phages.html', {'edit_status':'true','query_results':query_results,'latest':lname,
-                                                            'login_status': request.user.is_authenticated(),
+                                                            'login_status': request.user.is_authenticated,
                                                             'username': request.user.username}  )
             else:
                 phage = PhageData.objects.get(phage_name=name)
@@ -575,7 +575,7 @@ def editPhage(request):
                                                           'aform': aform,
                                                           'aiform': aiform,
                                                           'isoform':isoform,'iso':last,'exp':last_exp,
-                                                          'login_status': request.user.is_authenticated(),
+                                                          'login_status': request.user.is_authenticated,
                                                           'username': request.user.username,
                                                          })
         else:
@@ -594,12 +594,12 @@ def editPhage(request):
                                                       'aiform': aiform, 'isoform' : isoform,'expform':expform,
                                                       'iso':last,
                                                       'exp': last_exp,
-                                                      'login_status': request.user.is_authenticated(),
+                                                      'login_status': request.user.is_authenticated,
                                                       'username': request.user.username,
                                                      })
     else:
         return render(request,'Login.html',
-                      {'login_status': request.user.is_authenticated()
+                      {'login_status': request.user.is_authenticated
                        })
 
 
@@ -700,12 +700,12 @@ def model_form_upload(request):
             return render(request, 'view_phages.html', {'query_results': query_results,
                                                         'edit_status': 'false', 'add_status': 'false',
                                                         'delete_status': 'false','latest':lname,
-                                                        'login_status': request.user.is_authenticated(),
+                                                        'login_status': request.user.is_authenticated,
                                                         'username': request.user.username
                                                         })
     else:
         form = UploadFileForm()
-    return render(request, 'model_form_upload.html', {'form': form,'login_status': request.user.is_authenticated(),
+    return render(request, 'model_form_upload.html', {'form': form,'login_status': request.user.is_authenticated,
                                                         'username': request.user.username})
 
 def checkDuplicatesInAddPhage(phage_name, phage_CPT_id):
