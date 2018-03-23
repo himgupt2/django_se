@@ -4,7 +4,6 @@ backports.functools-lru-cache==1.4
 backports.ssl-match-hostname==3.4.0.2
 boto==2.48.0
 botocore==1.8.13
-cloud-init==0.7.6
 CodeIntel==0.9.3
 colorama==0.2.5
 configobj==4.7.2
