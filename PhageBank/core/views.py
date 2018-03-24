@@ -391,6 +391,52 @@ def view_phages(request):
                                                 'login_status': request.user.is_authenticated,
                                                 'username': request.user.username
                                                 })
+                                                
+                                                
+def about_us(request):
+    query_results = PhageData.objects.all()
+    name = validate_latest_phage(query_results)
+    return render(request, 'about_us.html', {'query_results': query_results,
+                                                'edit_status': 'false', 'add_status': 'false',
+                                                'delete_status': 'false', 'latest': name,
+                                                'login_status': request.user.is_authenticated,
+                                                'username': request.user.username
+                                                })
+                                                
+
+def peoples(request):
+    query_results = PhageData.objects.all()
+    name = validate_latest_phage(query_results)
+    return render(request, 'peoples.html', {'query_results': query_results,
+                                                'edit_status': 'false', 'add_status': 'false',
+                                                'delete_status': 'false', 'latest': name,
+                                                'login_status': request.user.is_authenticated,
+                                                'username': request.user.username
+                                                })
+                                                
+
+def articles(request):
+    query_results = PhageData.objects.all()
+    name = validate_latest_phage(query_results)
+    return render(request, 'articles.html', {'query_results': query_results,
+                                                'edit_status': 'false', 'add_status': 'false',
+                                                'delete_status': 'false', 'latest': name,
+                                                'login_status': request.user.is_authenticated,
+                                                'username': request.user.username
+                                                })                                                
+                                                
+                                                
+def contact_us(request):
+    query_results = PhageData.objects.all()
+    name = validate_latest_phage(query_results)
+    return render(request, 'contact_us.html', {'query_results': query_results,
+                                                'edit_status': 'false', 'add_status': 'false',
+                                                'delete_status': 'false', 'latest': name,
+                                                'login_status': request.user.is_authenticated,
+                                                'username': request.user.username
+                                                })                                                
+                                                                                                
+                                                
 @user_passes_test(lambda u: u.is_superuser, login_url='/admin/')
 def delele_all_phages(request):
     phage = PhageData.objects.all().delete()
