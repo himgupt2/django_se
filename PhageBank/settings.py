@@ -169,3 +169,8 @@ LOGIN_REDIRECT_URL = ''
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+
+# Configure Django App for Heroku.
+import django_heroku
+django_heroku.settings(locals())
